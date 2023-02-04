@@ -2,8 +2,8 @@
   <v-card class="mx-auto" max-width="500">
     <v-card-title>Zom 100: Bucket List of the Dead</v-card-title>
     <v-tabs v-model="tab" grow>
-      <v-tab key="pending">PENDING</v-tab>
-      <v-tab key="completed">COMPLETED</v-tab>
+      <v-tab key="pending">PENDING ({{ itemsPending.length }})</v-tab>
+      <v-tab key="completed">COMPLETED ({{ itemsCompleted.length }})</v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item key="pending">
