@@ -1,5 +1,7 @@
 export const state = () => ({
-  items: [],
+  items: localStorage.getItem("todoItems")
+    ? JSON.parse(localStorage.getItem("todoItems"))
+    : [],
 });
 
 export const getters = {
@@ -22,10 +24,23 @@ export const mutations = {
   },
   toggle(state, itemId) {
     const itemIndex = state.items.findIndex((v) => v.id == itemId);
-    console.log(itemIndex);
     if (itemIndex > -1) {
-      console.log(state.items[itemIndex]);
       state.items[itemIndex].completed = !state.items[itemIndex].completed;
     }
+  },
+  // Can use vuex-persist instead
+  saveToLocal(state) {
+    localStorage.setItem("todoItems", JSON.stringify(state.items));
+  },
+};
+
+export const actions = {
+  add({ commit }, name) {
+    commit("add", name);
+    commit("saveToLocal");
+  },
+  toggle({ commit }, itemId) {
+    commit("toggle", itemId);
+    commit("saveToLocal");
   },
 };

@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     onCheckboxClick(item) {
-      this.$store.commit("todo/toggle", item.id);
+      this.$store.dispatch("todo/toggle", item.id);
     },
   },
 };

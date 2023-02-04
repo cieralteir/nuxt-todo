@@ -20,7 +20,7 @@ export default {
   }),
   methods: {
     onSubmit() {
-      this.$store.commit("todo/add", this.name);
+      this.$store.dispatch("todo/add", this.name);
       // Clear input
       this.name = "";
     },
