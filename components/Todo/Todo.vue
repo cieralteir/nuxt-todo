@@ -7,26 +7,17 @@
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item key="pending">
-        <v-card flat>
-          <v-card-text>
-            <v-checkbox label="Item 1" hide-details></v-checkbox>
-            <v-checkbox label="Item 2" hide-details></v-checkbox>
-            <v-checkbox label="Item 3" hide-details></v-checkbox>
-          </v-card-text>
-        </v-card>
+        <TodoItems :items="itemsPending" @click="completeItem" />
       </v-tab-item>
       <v-tab-item key="completed">
-        <v-card flat>
-          <v-card-text>
-            <v-checkbox label="Item 4" hide-details></v-checkbox>
-            <v-checkbox label="Item 5" hide-details></v-checkbox>
-          </v-card-text>
-        </v-card>
+        <TodoItems
+          :items="itemsCompleted"
+          @click="(item) => completeItem(item, false)"
+        />
       </v-tab-item>
     </v-tabs-items>
     <v-card-actions>
-      <v-text-field label="Add item here" class="pr-2"></v-text-field>
-      <v-btn>ADD</v-btn>
+      <TodoForm @submit="addItem" />
     </v-card-actions>
   </v-card>
 </template>
@@ -35,6 +26,26 @@
 export default {
   data: () => ({
     tab: "",
+    items: [],
   }),
+  computed: {
+    itemsCompleted() {
+      return this.items.filter((v) => v.completed);
+    },
+    itemsPending() {
+      return this.items.filter((v) => !v.completed);
+    },
+  },
+  methods: {
+    addItem(item) {
+      this.items.push(item);
+    },
+    completeItem(item, completed = true) {
+      const itemIndex = this.items.findIndex((v) => v.id == item.id);
+      if (itemIndex > -1) {
+        this.$set(this.items[itemIndex], "completed", completed);
+      }
+    },
+  },
 };
 </script>
