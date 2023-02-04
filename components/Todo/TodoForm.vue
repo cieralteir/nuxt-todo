@@ -20,15 +20,9 @@ export default {
   }),
   methods: {
     onSubmit() {
-      if (!this.name) return;
-      const item = {
-        id: Math.random(),
-        name: this.name,
-        completed: false,
-      };
+      this.$store.commit("todo/add", this.name);
       // Clear input
       this.name = "";
-      this.$emit("submit", item);
     },
   },
 };

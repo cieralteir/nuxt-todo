@@ -7,17 +7,14 @@
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item key="pending">
-        <TodoItems :items="itemsPending" @click="completeItem" />
+        <TodoItems :items="itemsPending" />
       </v-tab-item>
       <v-tab-item key="completed">
-        <TodoItems
-          :items="itemsCompleted"
-          @click="(item) => completeItem(item, false)"
-        />
+        <TodoItems :items="itemsCompleted" />
       </v-tab-item>
     </v-tabs-items>
     <v-card-actions>
-      <TodoForm @submit="addItem" />
+      <TodoForm />
     </v-card-actions>
   </v-card>
 </template>
@@ -26,25 +23,13 @@
 export default {
   data: () => ({
     tab: "",
-    items: [],
   }),
   computed: {
     itemsCompleted() {
-      return this.items.filter((v) => v.completed);
+      return this.$store.getters["todo/itemsCompleted"];
     },
     itemsPending() {
-      return this.items.filter((v) => !v.completed);
-    },
-  },
-  methods: {
-    addItem(item) {
-      this.items.push(item);
-    },
-    completeItem(item, completed = true) {
-      const itemIndex = this.items.findIndex((v) => v.id == item.id);
-      if (itemIndex > -1) {
-        this.$set(this.items[itemIndex], "completed", completed);
-      }
+      return this.$store.getters["todo/itemsPending"];
     },
   },
 };
